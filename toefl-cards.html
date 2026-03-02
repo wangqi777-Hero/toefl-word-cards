@@ -1,0 +1,329 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>托福单词问答卡</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/v4-shims.min.css" rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .card-section {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            page-break-after: always;
+            /* 增加背景轻微动画 */
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        .card-section:hover {
+            background: rgba(255,255,255,0.15);
+        }
+        .cover-bg {
+            background-image: url(https://aka.doubaocdn.com/s/vjVP1w7uEs);
+            background-size: cover;
+            background-position: center;
+            /* 封面轻微缩放动画 */
+            animation: bgZoom 20s ease-in-out infinite alternate;
+        }
+        .back-cover-bg {
+            background-image: url(https://aka.doubaocdn.com/s/dPR61w7uEs);
+            background-size: cover;
+            background-position: center;
+            animation: bgZoom 20s ease-in-out infinite alternate;
+        }
+        .card {
+            width: 80%;
+            height: 80%;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            cursor: pointer;
+            /* 悬浮效果 */
+            transform: translateY(0);
+        }
+        .card:hover {
+            /* 悬浮时轻微上浮+阴影增强 */
+            transform: translateY(-8px) translateZ(0);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.2);
+        }
+        .card.flipped {
+            transform: rotateY(180deg) translateY(-8px);
+        }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 16px;
+            /* 增加内阴影 */
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+        }
+        .card-front {
+            background: linear-gradient(135deg, #f8fafc 0%, #f0f9ff 100%);
+            border: 2px solid #e2e8f0;
+        }
+        .card-back {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 2px solid #e0f2fe;
+            transform: rotateY(180deg);
+        }
+        .word-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: bold;
+            color: #1e40af;
+            margin-bottom: 1rem;
+            /* 文字轻微动画 */
+            transition: all 0.3s ease;
+        }
+        .card:hover .word-title {
+            transform: scale(1.05);
+        }
+        .word-meaning {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: #374151;
+            text-align: center;
+            padding: 0 2rem;
+            /* 渐入效果 */
+            animation: fadeIn 0.8s ease;
+        }
+        .cover-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: bold;
+            color: #1e40af;
+            text-align: center;
+            margin-bottom: 1rem;
+            /* 文字发光效果 */
+            text-shadow: 0 0 10px rgba(30, 64, 175, 0.2);
+            animation: pulse 3s ease-in-out infinite alternate;
+        }
+        .cover-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: #3b82f6;
+            text-align: center;
+        }
+        .hint-text {
+            color: #6b7280;
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            /* 轻微闪烁提示 */
+            animation: blink 3s ease-in-out infinite;
+        }
+
+        /* 自定义动画 */
+        @keyframes bgZoom {
+            0% { background-size: 100%; }
+            100% { background-size: 105%; }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.02); }
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 封面 -->
+    <section class="card-section cover-bg">
+        <div class="card">
+            <div class="cover-title">托福单词问答卡</div>
+            <div class="cover-subtitle">10个高频托福单词释义测试</div>
+            <p class="hint-text mt-4">点击卡片可查看单词释义</p>
+        </div>
+    </section>
+
+    <!-- 单词卡片1 -->
+    <section class="card-section">
+        <div class="card">
+            <div class="card-front">
+                <div class="word-title">fundamental</div>
+                <p class="hint-text">点击查看释义</p>
+            </div>
+            <div class="card-back">
+                <div class="word-meaning">adj. 重要的；基本的</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 单词卡片2 -->
+    <section class="card-section">
+        <div class="card">
+            <div class="card-front">
+                <div class="word-title">species</div>
+                <p class="hint-text">点击查看释义</p>
+            </div>
+            <div class="card-back">
+                <div class="word-meaning">n. 种类；物种</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 单词卡片3 -->
+    <section class="card-section">
+        <div class="card">
+            <div class="card-front">
+                <div class="word-title">affect</div>
+                <p class="hint-text">点击查看释义</p>
+            </div>
+            <div class="card-back">
+                <div class="word-meaning">v. 影响、假装、感动</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 单词卡片4 -->
+    <section class="card-section">
+        <div class="card">
+            <div class="card-front">
+                <div class="word-title">approach</div>
+                <p class="hint-text">点击查看释义</p>
+            </div>
+            <div class="card-back">
+                <div class="word-meaning">v. 靠近；n. 方法</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 单词卡片5 -->
+    <section class="card-section">
+        <div class="card">
+            <div class="card-front">
+                <div class="word-title">appropriate</div>
+                <p class="hint-text">点击查看释义</p>
+            </div>
+            <div class="card-back">
+                <div class="word-meaning">adj. 适当的</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 单词卡片6 -->
+    <section class="card-section">
+        <div class="card">
+            <div class="card-front">
+                <div class="word-title">economic</div>
+                <p class="hint-text">点击查看释义</p>
+            </div>
+            <div class="card-back">
+                <div class="word-meaning">adj. 经济的；经济学的</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 单词卡片7 -->
+    <section class="card-section">
+        <div class="card">
+            <div class="card-front">
+                <div class="word-title">bully</div>
+                <p class="hint-text">点击查看释义</p>
+            </div>
+            <div class="card-back">
+                <div class="word-meaning">v. 欺负；恐吓；威逼</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 单词卡片8 -->
+    <section class="card-section">
+        <div class="card">
+            <div class="card-front">
+                <div class="word-title">complicated</div>
+                <p class="hint-text">点击查看释义</p>
+            </div>
+            <div class="card-back">
+                <div class="word-meaning">adj. 结构复杂的</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 单词卡片9 -->
+    <section class="card-section">
+        <div class="card">
+            <div class="card-front">
+                <div class="word-title">strategy</div>
+                <p class="hint-text">点击查看释义</p>
+            </div>
+            <div class="card-back">
+                <div class="word-meaning">n. 战略；规划</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 单词卡片10 -->
+    <section class="card-section">
+        <div class="card">
+            <div class="card-front">
+                <div class="word-title">agent</div>
+                <p class="hint-text">点击查看释义</p>
+            </div>
+            <div class="card-back">
+                <div class="word-meaning">n. 代理商、原动力、动因</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 封底 -->
+    <section class="card-section back-cover-bg">
+        <div class="card">
+            <div class="cover-title">测试完成</div>
+            <div class="cover-subtitle">恭喜你完成10个托福单词的释义测试</div>
+            <p class="hint-text mt-4">可以重新浏览卡片巩固记忆</p>
+        </div>
+    </section>
+
+    <script>
+        // 实现卡片点击翻转功能
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.classList.toggle('flipped');
+                // 点击时增加轻微震动反馈
+                this.style.animation = "none";
+                setTimeout(() => {
+                    this.style.animation = "tapFeedback 0.3s ease";
+                }, 10);
+            });
+        });
+
+        // 动态添加点击反馈动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes tapFeedback {
+                0%, 100% { transform: translateY(-8px) rotateY(${document.querySelector('.card').classList.contains('flipped') ? 180 : 0}deg) scale(1); }
+                50% { transform: translateY(-8px) rotateY(${document.querySelector('.card').classList.contains('flipped') ? 180 : 0}deg) scale(0.98); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+</body>
+</html>
